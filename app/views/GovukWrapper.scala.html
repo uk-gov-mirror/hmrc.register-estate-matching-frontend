@@ -17,6 +17,7 @@
 @import play.twirl.api.HtmlFormat
 @import views.html.components.language_selection
 @import views.html.layouts.GovUkTemplate
+@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 
 @this(
     header_nav: HeaderNav,
@@ -80,9 +81,18 @@
 @footerTop = {}
 @footerLinks = {}
 
+@banner = {
+    @betaBanner(
+        userLoggedIn = true,
+        betaFeedbackUrl = appConfig.betaFeedbackUrl,
+        betaFeedbackUnauthenticatedUrl = appConfig.betaFeedbackUnauthenticatedUrl,
+        showFeedbackLinkInBetaBanner = true
+    )
+}
+
 @serviceInfoBlock = {
     @serviceInfo(
-      betaBanner = HtmlFormat.empty,
+      betaBanner = banner,
       includeHMRCBranding = false,
       includeGridWrapper = false,
       serviceInfoContent = Some(serviceInfoContent))
@@ -102,7 +112,7 @@
     }
 }
 
-@getHelpForm = @{reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
+@getHelpForm = @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
 
 @content = {
     @main_content(
